@@ -4,7 +4,7 @@ const MockDai = artifacts.require("MockDai")
 const MockVat = artifacts.require("MockVat")
 const WeiDaiBank = artifacts.require("WeiDaiBank")
 const InertReserve = artifacts.require("InertReserve")
-const VersionController = artifacts.require("WeiDaiVersionController")
+const MockDaiJoin = artifacts.require("MockDaiJoin")
 
 module.exports = async function (deployer, network, accounts) {
 	var potReserveInstance, inertReserveInstance, bankInstance
@@ -19,13 +19,17 @@ module.exports = async function (deployer, network, accounts) {
 
 		await deployer.deploy(MockPot)
 		await deployer.deploy(MockVat)
+		await deployer.deploy(MockDaiJoin)
 
 		const mockPotInstance = await MockPot.deployed()
 		const mockDaiInstance = await MockDai.deployed()
 		const mockVatInstance = await MockVat.deployed()
+		const mockDaiJoinInstance = await MockDaiJoin.deployed()
+
 		bankInstance = await WeiDaiBank.deployed()
 
-		await potReserveInstance.setMakerAddresses(mockPotInstance.address, mockDaiInstance.address, mockVatInstance.address)
+		await mockDaiJoinInstance.setMakerAddresses(mockVatInstance.address, mockDaiInstance.address);
+		await potReserveInstance.setMakerAddresses(mockPotInstance.address, mockDaiInstance.address, mockDaiJoinInstance.address)
 		await potReserveInstance.approveForTesting()
 
 		await mockPotInstance.setDaiAddress(mockDaiInstance.address);
