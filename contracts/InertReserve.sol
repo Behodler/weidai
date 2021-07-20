@@ -22,7 +22,7 @@ contract InertReserve is Secondary, ReserveLike{
 		return ERC20(daiAddress).balanceOf(address(this));
 	}
 
-	function transferToNewReserve(address reserve) public {
+	function transferToNewReserve(address reserve) public onlyPrimary {
 		uint daiBalance = ERC20(daiAddress).balanceOf(address(this));
 		require(ERC20(daiAddress).transfer(reserve,daiBalance),"transferToNewReserve failed at Dai transfer");
 	}
