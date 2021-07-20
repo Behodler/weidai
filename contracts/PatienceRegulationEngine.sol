@@ -68,7 +68,8 @@ contract PatienceRegulationEngine is Secondary, Versioned {
 	function buyWeiDai(uint dai, uint split) public versionMatch enabledOnly {
 		require(lockedWeiDai[msg.sender] == 0,"must claim weidai before buying more.");
 		setDonationSplit(msg.sender,split);
-		uint weiDaiToBuy = dai.mul(10000).div(WeiDaiBank(getWeiDaiBank()).daiPerMyriadWeidai());
+		//BUG ON NEXT LINE: maybw bank isn't set?
+		 uint weiDaiToBuy = dai.mul(10000).div(WeiDaiBank(getWeiDaiBank()).daiPerMyriadWeidai());
 
 		WeiDaiBank(getWeiDaiBank()).issue(msg.sender, weiDaiToBuy, dai);
 		lockedWeiDai[msg.sender] = weiDaiToBuy;
