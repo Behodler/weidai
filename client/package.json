@@ -7,7 +7,7 @@
 		"@material-ui/icons": "^4.9.1",
 		"@truffle/hdwallet-provider": "^1.0.18",
 		"acorn": "^6.0.7",
-		"ajv": "^6.8.1",
+		"ajv": "^6.12.3",
 		"bignumber.js": "^8.0.1",
 		"connected-react-router": "^6.3.2",
 		"fork-ts-checker-webpack-plugin": "^0.2.10",
